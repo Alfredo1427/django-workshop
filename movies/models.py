@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from django.db import models
 
 
@@ -9,8 +11,9 @@ class Movie(models.Model):
                        ('4', 'Good'),
                        ('5', 'Excellent'))
 
-    name = models.CharField(max_length=200)
+    name = models.CharField(max_length=200, unique=True)
     ranking = models.CharField(choices=RANKING_CHOICES,
                                max_length=3,
                                null=True,
                                blank=True)
+    release_date = models.DateField(default=datetime.now())
