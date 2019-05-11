@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1>Crear Película</h1>
+    <form method="POST">
+        {% csrf_token %}
+        {{ movie_form.as_p }}
+        <input class="button btn-success" type="submit">
+    </form>
+{% endblock %}
