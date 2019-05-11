@@ -17,6 +17,7 @@ import environ
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 env_file = os.path.join(BASE_DIR, '.env')
+
 environ.Env.read_env(env_file)
 
 # Quick-start development settings - unsuitable for production
