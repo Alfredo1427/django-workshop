@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1>Películas</h1>
+    <table class="table table-stripped">
+    {% for movie in movies %}
+        <tr>
+            <td><a href="{% url 'movie_detail' movie.pk %}">{{ movie.name }}</a></td>
+            <td>{{ movie.get_ranking_display }}</td>
+        </tr>
+    {% endfor %}
+    </table>
+{% endblock %}
