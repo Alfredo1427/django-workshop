@@ -11,9 +11,14 @@ class Movie(models.Model):
                        ('4', 'Good'),
                        ('5', 'Excellent'))
 
-    name = models.CharField(max_length=200, unique=True)
+    name = models.CharField(max_length=200, unique=True, verbose_name='Nombre')
     ranking = models.CharField(choices=RANKING_CHOICES,
                                max_length=3,
                                null=True,
-                               blank=True)
-    release_date = models.DateField(default=datetime.now())
+                               blank=True,
+                               verbose_name='Calificación')
+    release_date = models.DateField(default=datetime.now(), verbose_name='Fecha de estreno')
+
+    class Meta:
+        verbose_name = 'Película'
+        verbose_name_plural = 'Películas'

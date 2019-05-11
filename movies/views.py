@@ -7,17 +7,32 @@ from movies.models import Movie
 
 
 # Create a new movie
-def movie_create(request):
-    movie_form = MovieForm()
+def movie_create_or_edit(request, pk=None):
+    # Views for retrieving existing or new modelform
+    if request.method == 'GET':
+        if pk:
+            print('GET movie with pk')
+            movie = Movie.objects.get(pk=pk)
+            movie_form = MovieForm(instance=movie)
+        else:
+            movie_form = MovieForm()
 
+    # Views for retrieving existing or new modelform
     if request.method == 'POST':
-        movie_form = MovieForm(request.POST)
+        if pk:
+            print('POST movie with pk')
+            movie = Movie.objects.get(pk=pk)
+            movie_form = MovieForm(request.POST, instance=movie)
+        else:
+            movie_form = MovieForm(request.POST)
+
         if movie_form.is_valid():
             movie_form.save()
             messages.success(request, '{}'.format('Película guardada exitosamente'))
             return redirect(movie_list)
         else:
-            print(movie_form.errors)
+            for error in movie_form.errors:
+                print(error)
     return render(request, 'movies/movie_create.html', {'movie_form': movie_form})
 
 
@@ -27,15 +42,9 @@ def movie_list(request):
     return render(request, 'movies/movie_list.html', {'movies': movies})
 
 
-# Get movie detail
-def movie_detail(request, pk):
-    movie = Movie.objects.get(pk=pk)
-    return render(request, 'movies/movie_detail.html', {'movie': movie})
-
-
 # Delete movie
 def movie_delete(request, pk):
     movie = Movie.objects.get(pk=pk)
     movie.delete()
-    messages.success(request, '{}'.format('Película eliminada exitosamente'))
+    messages.success(request, '{}'.format('Película {} eliminada exitosamente'.format(movie.name)))
     return redirect(movie_list)

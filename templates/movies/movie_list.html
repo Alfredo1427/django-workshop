@@ -2,17 +2,26 @@
 
 {% block content %}
     <h1>Películas</h1>
-    <table class="table table-stripped">
-        {% for movie in movies %}
-            <tr>
-                <td><a href="{% url 'movie_detail' movie.pk %}">{{ movie.name }}</a></td>
-                <td>{{ movie.get_ranking_display }}</td>
-                <td><a href="{% url 'movie_delete' movie.pk %}">
-                    <button type="button" class="btn btn-labeled btn-danger">
-                        <span class="btn-label"><i class="glyphicon glyphicon-remove"></i></span>Delete
-                    </button>
-                </a></td>
-            </tr>
-        {% endfor %}
-    </table>
+
+    <a href="{% url 'movie_create' %}">
+        <button type="button" class="btn btn-labeled btn-secondary">
+            <span class="btn-label"><i class="glyphicon glyphicon-remove"></i></span>Add Movie
+        </button>
+    </a>
+
+    <div class="col-12 col-md-6 col-lg-2">
+        <table class="table table-stripped">
+            {% for movie in movies %}
+                <tr>
+                    <td><a href="{% url 'movie_edit' movie.pk %}">{{ movie.name }}</a></td>
+                    <td>{{ movie.get_ranking_display }}</td>
+                    <td><a href="{% url 'movie_delete' movie.pk %}">
+                        <button type="button" class="btn btn-labeled btn-danger">
+                            <span class="btn-label"><i class="glyphicon glyphicon-remove"></i></span>Delete
+                        </button>
+                    </a></td>
+                </tr>
+            {% endfor %}
+        </table>
+    </div>
 {% endblock %}
